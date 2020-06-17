@@ -2,6 +2,10 @@
 
 namespace Alura\Doctrine\Helper;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Setup;
+
 class EntityManagerFactory
 {
     public function getEntityManager(): EntityManagerInterface
