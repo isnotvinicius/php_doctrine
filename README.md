@@ -131,6 +131,20 @@ public function findBy(
 - Fazemos o flush() para finalizar.
 
 
+## Relacionamento OneToMany
+
+- Quando uma entidade tem um atributo de outra entidade e esse atributo está no plural podemos utilizar um ArrayCollection para definir ele. (UM aluno pode ter VÁRIOS telefones).
+
+- Podemos informar essa relação através da anotação @OneToMany(targetEntity=""), onde targetEntity é a Entidade que este atributo está relacionado.
+
+- Na entidade que representa o Many temos que adicionar o atributo que representa o One (Aluno neste exemplo) e colocar uma anotação informando que este atributo é ManyToOne(targetEntity="").
+
+- Depois de adicionar o atributo e a anotação na entidade Many, devemos informar dentro do OneToMany o campo mappedBy que é o atributo colocado na outra entidade. OneToMany(targetEntity="Telefone", mappedBy="aluno").
+
+- No construtor informamos que o atributo em questão é um array collection, ou seja, $this->atributo = new ArrayCollection().
+
+- No método get deste atributo podemos informar que o retorno será um Collection, pois quando os dados vierem do banco eles podem ou não ser um ArrayCollection, como este método implementa a interface Collection podemos ter o retorno como Collection.
+
 
 
 
