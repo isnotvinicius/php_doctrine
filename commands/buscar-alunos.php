@@ -1,7 +1,8 @@
 <?php
 
-use Alura\Doctrine\Helper\EntityManagerFactory;
 use Alura\Doctrine\Entity\Aluno;
+use Alura\Doctrine\Entity\Telefone;
+use Alura\Doctrine\Helper\EntityManagerFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -13,15 +14,15 @@ $alunoRepository = $entityManager->getRepository(Aluno::class);
 /** @var Aluno[] $alunoList */
 $alunoList = $alunoRepository->findAll();
 
-foreach($alunoList as $aluno){
-    echo "Id: {$aluno->getId()}\nNome: {$aluno->getNome()}\n\n";
+foreach ($alunoList as $aluno) {
+    $telefones = $aluno
+        ->getTelefones()
+        ->map(function (Telefone $telefone) {
+            return $telefone->getNumero();
+        })
+        ->toArray();
+    echo "ID: {$aluno->getId()}\nNome: {$aluno->getNome()}\n";
+    echo "Telefones: " . implode(', ', $telefones);
+
+    echo "\n\n";
 }
-
-$teste = $alunoRepository->find(2);
-echo $teste->getNome() . PHP_EOL;
-
-$teste2 = $alunoRepository->findOneBy([
-    'nome' => 'Yasmin'
-]);
-
-var_dump($teste2);

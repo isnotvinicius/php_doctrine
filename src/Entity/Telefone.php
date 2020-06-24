@@ -13,16 +13,19 @@ class Telefone
      * @Column(type="integer")
      */
     private $id;
-
     /**
      * @Column(type="string")
      */
     private $numero;
-
     /**
      * @ManyToOne(targetEntity="Aluno")
      */
     private $aluno;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     public function setId(int $id): self
     {
@@ -30,20 +33,15 @@ class Telefone
         return $this;
     }
 
-    public function getId(): int
+    public function getNumero(): string
     {
-        return $this->id;
+        return $this->numero;
     }
 
     public function setNumero(string $numero): self
     {
         $this->numero = $numero;
         return $this;
-    }
-
-    public function getNumero(): string
-    {
-        return $this->numero;
     }
 
     public function getAluno(): Aluno

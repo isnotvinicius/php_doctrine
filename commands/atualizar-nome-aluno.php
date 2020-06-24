@@ -9,7 +9,10 @@ $entityManagerFactory = new EntityManagerFactory();
 $entityManager = $entityManagerFactory->getEntityManager();
 
 $id = $argv[1];
-$aluno = $entityManager->getReference(Aluno::class, $id);
+$novoNome = $argv[2];
 
-$entityManager->remove($aluno);
+$aluno = $entityManager->find(Aluno::class, $id);
+$aluno->setNome($novoNome);
+
 $entityManager->flush();
+

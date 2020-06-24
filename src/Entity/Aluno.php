@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 /**
  * @Entity
  */
-
 class Aluno
 {
     /**
@@ -17,20 +16,23 @@ class Aluno
      * @Column(type="integer")
      */
     private $id;
-    
     /**
      * @Column(type="string")
      */
     private $nome;
-
     /**
-     * @OneToMany(targetEntity="Telefone", mappedBy="aluno")
+     * @OneToMany(targetEntity="Telefone", mappedBy="aluno", cascade={"remove", "persist"})
      */
     private $telefones;
 
     public function __construct()
     {
         $this->telefones = new ArrayCollection();
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getNome(): string
@@ -40,19 +42,15 @@ class Aluno
 
     public function setNome(string $nome): self
     {
-        $this->nome = $nome;       
-        return $this; 
+        $this->nome = $nome;
+        return $this;
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function setTelefone(Telefone $telefone)
+    public function addTelefone(Telefone $telefone)
     {
         $this->telefones->add($telefone);
         $telefone->setAluno($this);
+
         return $this;
     }
 

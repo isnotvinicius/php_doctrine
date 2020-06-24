@@ -146,7 +146,38 @@ public function findBy(
 - No método get deste atributo podemos informar que o retorno será um Collection, pois quando os dados vierem do banco eles podem ou não ser um ArrayCollection, como este método implementa a interface Collection podemos ter o retorno como Collection.
 
 
+## Migrations
 
+- É um meio de versionar o banco de dados para que quando outras pessoas forem fazer alterações ou testar o projeto, tudo esteja atualizado e pronto para usar com apenas um comando como no git. Também é possível voltar versões com as migrations.
+
+- Para instalar Migrations utilizamos composer require doctrine/migrations.
+
+- Precisamos criar o arquivo de configuração das Migrations no diretório raiz do projeto.
+
+```
+<?php
+
+return [
+    'name' => 'My Project Migrations',
+    'migrations_namespace' => 'MyProject\Migrations',
+    'table_name' => 'doctrine_migration_versions',
+    'column_name' => 'version',
+    'column_length' => 14,
+    'executed_at_column_name' => 'executed_at',
+    'migrations_directory' => '/data/doctrine/migrations-docs-example/lib/MyProject/Migrations',
+    'all_or_nothing' => true,
+    'check_database_platform' => true,
+];
+```
+
+- O comando migrations:diff gera uma migration comparando nosso banco de dados atual com as informações que temos mapeadas.
+
+- O comando migrations:migrate executa todos os arquivos de migração que o projeto possuí.
+
+
+## Relacionamento ManyToMany
+
+- 
 
 
 
