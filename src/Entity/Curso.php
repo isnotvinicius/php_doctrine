@@ -21,6 +21,9 @@ class Curso
      */
     private $nome;
 
+    /**
+     * @ManyToMany(targetEntity="Aluno", inversedBy="cursos")
+     */
     private $alunos;
 
     public function __construct()
@@ -42,5 +45,21 @@ class Curso
     {
         $this->nome = $nome;
         return $this;
+    }
+
+    public function addAluno(Aluno $aluno)
+    {
+        if ($this->alunos->contains($aluno)){
+            return $this;
+        }
+
+        $this->alunos->add($aluno);
+        $aluno->addCurso($this);
+        return $this;
+    }
+
+    public function getAunos()
+    {
+        return $this->alunos;
     }
 }

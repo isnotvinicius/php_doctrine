@@ -177,8 +177,37 @@ return [
 
 ## Relacionamento ManyToMany
 
-- 
+- A anotação do relacionamento ManyToMany é parecida com a OneToMany, colocamos a entidade alvo em ambas as entidades e em uma delas colocamos o mappedBy que aponta para o atributo mapeado na outra entidade.
 
+- Como mapeamos os atributos em ambas as classes fazendo uma relação bidirecional colocamos a anotação inversedBy e o atributo definido na outra entidade. Isso deixa mais explícito para o Doctrine que temos uma relação nos dois lados.
+
+```
+class Curso
+{
+    /**
+    * @ManyToMany(targetEntity="Aluno", inversedBy="cursos")
+    */
+    private $alunos;
+}
+
+class Aluno
+{
+    /**
+    * @ManyToMany(targetEntity="Cursos", mappedBy="alunos")
+    */
+    private $cursos;
+}
+```
+
+- Como na hora de adicionar um aluno no curso já adicionamos este curso na entidade aluno também, podemos criar um loop infinito de chamadas de método add o que ocasionalmente leva ao preenchimento total da memória. Para evitar isso nós verificamos se aquele elemento já foi adicionado a nossa lista graças a coleção do doctrine.
+
+```
+if ($this->atributo_entidade->contains($atributo_recebido))
+{
+    return $this;
+}
+```
+Com este if nós verificamos se aquele atributo recebido já existe na nossa coleção e não adicionamos ele novamente evitando o loop infinito.
 
 
 
