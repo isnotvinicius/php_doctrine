@@ -210,6 +210,18 @@ if ($this->atributo_entidade->contains($atributo_recebido))
 Com este if nós verificamos se aquele atributo recebido já existe na nossa coleção e não adicionamos ele novamente evitando o loop infinito.
 
 
+## DQL
 
+- DQL, ou Doctrine Query Language, é a linguagem de consultas do Doctrine. É uma saída quando precisamos realizar uma busca muita complexa.
+
+- Ela nos ajuda a executar comandos SQL sem utilizar nome de tabelas, colunas e etc, utilizamos o nome das entidades mapeadas e seus atributos.
+
+- Para criar uma DQL utilizamos o EntityManager chamando o método createQuery e passamos como parametro a query desejada.
+
+```
+$dql = 'SELECT aluno FROM Alura\\Doctrine\\Entity\\Aluno aluno';
+$entityManager->createQuery($dql);
+```
+- Podemos filtrar as buscas como em um SQl normal utilizando WHERE, ORDER BY, Alias, etc. 
 
 
