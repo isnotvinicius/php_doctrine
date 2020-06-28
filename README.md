@@ -224,4 +224,34 @@ $entityManager->createQuery($dql);
 ```
 - Podemos filtrar as buscas como em um SQl normal utilizando WHERE, ORDER BY, Alias, etc. 
 
+- É interessante a criação de repositórios para colocar as nossas DQLs lá e deixar o código mais legível e de fácil manutenção. Lembrando sempre de informar na entidade qual repositório ela deve usar através da anotação @entity(repositoryClass="ArquivoDeRepositorio")
+
+
+## QueryBuilder
+
+- É um meio de construir nossas DQLs em vários passos utilizando métodos e classes da interface QueryBuilder, isso ajuda quem não tem familiaridade com DQL ou SQL.
+
+- Para usar o QueryBuilder nós utilizamos o createQueryBuilder passando como parâmetro o alias da entidade mapeada no repositório, ou seja, o alias passado sempre irá ser da classe que o repositório está utilizando, no nosso caso Aluno.
+
+```
+    public function buscarCursosPorAluno()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->join('a.telefones', 't')
+            ->join('a.cursos', 'c')
+            ->addSelect('t')
+            ->addSelect('c')
+            ->getQuery();
+        return $query->getResult();
+    }
+```
+
+- Note que criamos a mesma DQL mas sem escrevê-la, a criamos de um jeito "automático" apenas chamando métodos e passando parâmetros, a Query é criada automaticamente pelo Doctrine sem precisarmos concatenar strings e criar a DQL sozinhos.
+
+- Note também que utilizamos join, assim como podemos utilizar where, orderBy e outros meios de filtrar dados fornecidos pelo SQL.
+
+- No final utilizamos o getQuery() para obter a query na nossa string e poder pegar o resultado depois.
+
+- A documentação do Doctrine traz todos os métodos disponiveis para uso através do QueryBuilder. 
+<a>https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/query-builder.html</a>
 
